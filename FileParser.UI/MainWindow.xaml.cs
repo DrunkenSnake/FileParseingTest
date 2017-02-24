@@ -56,17 +56,25 @@ namespace FileParser.UI
         private void filePath_PreviewDrop(object sender, DragEventArgs e)//handle file drop
         {
             totalTextBox.Text = "";//clear results box
-            var fileNames = (string[])e.Data.GetData(DataFormats.FileDrop, true);
-            if (fileNames != null)
+            try
             {
-                foreach (var fileName in fileNames)
+                var fileNames = (string[]) e.Data.GetData(DataFormats.FileDrop, true);
+                if (fileNames != null)
                 {
-                    var totals = _processor.ProcessFromPath(fileName).ToArray();//sends each filename up to be handled
-                    foreach (var total in totals)
+                    foreach (var fileName in fileNames)
                     {
-                        totalTextBox.Text += total + "\r\n";
+                        var totals = _processor.ProcessFromPath(fileName).ToArray();
+                        //sends each filename up to be handled
+                        foreach (var total in totals)
+                        {
+                            totalTextBox.Text += total + "\r\n";
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                totalTextBox.Text = ex.Message;
             }
         }
         private void button_Click(object sender, RoutedEventArgs e)

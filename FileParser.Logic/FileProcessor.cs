@@ -31,9 +31,19 @@ namespace FileParser.Logic
 
         public IEnumerable<int> ProcessFromPath(string filePath)
         {
-            var menuToProcess = _reader.GetMenuFromFilePath(filePath);//get menu list from filepath
-            var returnValue = menuToProcess.Select(menu => menu.Items.Where(i => !string.IsNullOrEmpty(i?.Label)).ToArray().Sum(x => x.Id)).ToList();//create list of sums of id's over the list of menus
-            return returnValue;
+            try
+            {
+                var menuToProcess = _reader.GetMenuFromFilePath(filePath); //get menu list from filepath
+                var returnValue =
+                    menuToProcess.Select(
+                            menu => menu.Items.Where(i => !string.IsNullOrEmpty(i?.Label)).ToArray().Sum(x => x.Id))
+                        .ToList(); //create list of sums of id's over the list of menus
+                return returnValue;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
         #endregion Public
