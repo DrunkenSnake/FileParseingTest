@@ -12,17 +12,15 @@ namespace FileParser.Logic
     {
         #region Fields
 
-        public FileReader _reader;
+        private readonly FileReader _reader;//reader to be used in processor, more functions can be added later
 
         #endregion Fields
 
         #region Constructors
 
-        public FileProcessor() : this(new FileReader()){ }
-
-        public FileProcessor(FileReader reader)
+        public FileProcessor()
         {
-            _reader = reader;
+            _reader = new FileReader();
         }
 
         #endregion Constructors
@@ -33,8 +31,8 @@ namespace FileParser.Logic
 
         public IEnumerable<int> ProcessFromPath(string filePath)
         {
-            var menuToProcess = _reader.GetMenuFromFilePath(filePath);
-            var returnValue = menuToProcess.Select(menu => menu.Items.Where(i => !string.IsNullOrEmpty(i?.Label)).ToArray().Sum(x => x.Id)).ToList();
+            var menuToProcess = _reader.GetMenuFromFilePath(filePath);//get menu list from filepath
+            var returnValue = menuToProcess.Select(menu => menu.Items.Where(i => !string.IsNullOrEmpty(i?.Label)).ToArray().Sum(x => x.Id)).ToList();//create list of sums of id's over the list of menus
             return returnValue;
         }
 
