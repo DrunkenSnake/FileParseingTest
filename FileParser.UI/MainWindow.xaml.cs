@@ -34,7 +34,7 @@ namespace FileParser.UI
             var effects = DragDropEffects.All;
             if (e.Data.GetDataPresent(DataFormats.FileDrop, true))
             {
-                var fileNames = (string[]) e.Data.GetData(DataFormats.Text, true);
+                var fileNames = (string[]) e.Data.GetData(DataFormats.FileDrop, true);
                 if (fileNames != null)
                 {
                     foreach (var fileName in fileNames)
@@ -75,6 +75,14 @@ namespace FileParser.UI
                 {
                     totalTextBox.Text += total + "\r\n";
                 }
+            }
+        }
+
+        private void FilePath_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                button_Click(sender, e);
             }
         }
     }
