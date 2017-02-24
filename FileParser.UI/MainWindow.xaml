@@ -1,0 +1,20 @@
+﻿<Window x:Class="FileParser.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FileParser.UI"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid Background="CornflowerBlue">
+        <TextBox x:Name="filePath" HorizontalAlignment="Left" Height="24" Margin="66,85,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="317" AcceptsReturn="True" AllowDrop="True" 
+                 PreviewDragEnter="filePath_PreviewDragEnter" 
+                 PreviewDragOver="filePath_PreviewDragEnter" 
+                 PreviewDrop="filePath_PreviewDrop" />
+        <Button x:Name="button" Content="Process" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="388,83,0,0" Click="button_Click" Height="24"/>
+        <Label x:Name="fileLabel" Content="File Path" HorizontalAlignment="Left" Margin="10,83,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="totalTextBox" HorizontalAlignment="Left" Height="118" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="167,159,0,0"/>
+        <Label x:Name="totalLabel" Content="Totals" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="106,159,0,0"/>
+
+    </Grid>
+</Window>
