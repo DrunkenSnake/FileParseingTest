@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -36,13 +37,21 @@ namespace FileParser.Domain
 
         public IEnumerable<Menu> GetMenuFromFilePath(string filePath)
         {
-            string fileText;
-            using (var reader = new StreamReader(filePath, true))//stream reader, autodetects encoding
+            if (File.Exists(filePath))
             {
-                fileText = reader.ReadToEnd();
+                string fileText;
+                using (var reader = new StreamReader(filePath, true)) //stream reader, autodetects encoding
+                {
+                    fileText = reader.ReadToEnd();
+                }
+                var menus = JsonConvert.DeserializeObject<Wrap[]>(fileText, _settings);
+                //deserializes file contents to menus list
+                return menus.Select(menu => menu.Menu).ToList();
             }
-            var menus = JsonConvert.DeserializeObject<Wrap[]>(fileText, _settings);//deserializes file contents to menus list
-            return menus.Select(menu => menu.Menu).ToList();
+            else
+            {
+                throw new Exception($"invalid file path: file {filePath}");
+            }
         }
 
         #endregion Public
