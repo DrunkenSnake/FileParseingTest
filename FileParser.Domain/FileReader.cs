@@ -37,20 +37,27 @@ namespace FileParser.Domain
 
         public IEnumerable<Menu> GetMenuFromFilePath(string filePath)
         {
-            if (File.Exists(filePath))
+            try
             {
-                string fileText;
-                using (var reader = new StreamReader(filePath, true)) //stream reader, autodetects encoding
+                if (File.Exists(filePath))
                 {
-                    fileText = reader.ReadToEnd();
+                    string fileText;
+                    using (var reader = new StreamReader(filePath, true)) //stream reader, autodetects encoding
+                    {
+                        fileText = reader.ReadToEnd();
+                    }
+                        var menus = JsonConvert.DeserializeObject<Wrap[]>(fileText, _settings);
+                        //deserializes file contents to menus list
+                        return menus.Select(menu => menu.Menu).ToList();
                 }
-                var menus = JsonConvert.DeserializeObject<Wrap[]>(fileText, _settings);
-                //deserializes file contents to menus list
-                return menus.Select(menu => menu.Menu).ToList();
+                else
+                {
+                    throw new Exception($"Invalid File found for path {filePath}");
+                }
             }
-            else
+            catch(Exception ex)
             {
-                throw new Exception($"invalid file path: file {filePath}");
+                throw new Exception($"Invalid File found for path {filePath}", ex);
             }
         }
 
